@@ -51,13 +51,12 @@ public class EmployeeServiceTest {
 
     @Test
     void testGetAllEmployees() {
-        // Arrange
+
         when(employeeRepository.findAll()).thenReturn(Arrays.asList(employee1, employee2));
 
-        // Act
+
         List<Employee> result = employeeService.getAllEmployees();
 
-        // Assert
         assertEquals(2, result.size());
         assertEquals(employee1, result.get(0));
         assertEquals(employee2, result.get(1));
@@ -65,17 +64,13 @@ public class EmployeeServiceTest {
 
     @Test
     void testGetAllEmployee() {
-        // Arrange
         PageRequest pageable = PageRequest.of(0, 10);
         List<Employee> employees = Arrays.asList(employee1, employee2);
         Page<Employee> page = new PageImpl<>(employees);
 
         when(employeeRepository.findAll(pageable)).thenReturn(page);
 
-        // Act
         Page<Employee> result = employeeService.getAllEmployee(pageable);
-
-        // Assert
         assertEquals(2, result.getTotalElements());
         assertEquals(employee1, result.getContent().get(0));
         assertEquals(employee2, result.getContent().get(1));
@@ -83,7 +78,6 @@ public class EmployeeServiceTest {
 
     @Test
     void testAddEmployee() {
-        // Arrange
         Employee employeeToAdd = new Employee();
         employeeToAdd.setSapId(1);
         employeeToAdd.setFirstName("hari");
