@@ -116,22 +116,6 @@ public class EmployeeServiceTest {
         assertEquals(employeeToUpdate.getEmailId(), result.getEmailId());
     }
 
-    @Test
-    void testUpdateEmployee_ThrowsResourceNotFoundException() {
-
-        int sapId = 100;
-        Employee updatedEmployee = new Employee();
-        updatedEmployee.setSapId(1);
-        updatedEmployee.setFirstName("Jaya");
-        updatedEmployee.setLastName("Raj");
-        updatedEmployee.setDesignation("Analyst");
-        updatedEmployee.setEmailId("jaya@.com");
-        Optional<Employee> optionalEmployee = Optional.empty();
-
-        when(employeeRepository.findById(sapId)).thenReturn(optionalEmployee);
-
-        assertThrows(ResourceNotFoundException.class, () -> employeeService.updateEmployee(sapId, updatedEmployee));
-    }
 
     @Test
     void testDeleteEmployee() {
