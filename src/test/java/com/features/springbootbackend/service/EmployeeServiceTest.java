@@ -122,10 +122,10 @@ public class EmployeeServiceTest {
         int sapId = 100;
         Employee updatedEmployee = new Employee();
         updatedEmployee.setSapId(1);
-        updatedEmployee.setFirstName("John");
-        updatedEmployee.setLastName("Updated");
-        updatedEmployee.setDesignation("Updated Designation");
-        updatedEmployee.setEmailId("john.updated@example.com");
+        updatedEmployee.setFirstName("Jaya");
+        updatedEmployee.setLastName("Raj");
+        updatedEmployee.setDesignation("Analyst");
+        updatedEmployee.setEmailId("jaya@.com");
         Optional<Employee> optionalEmployee = Optional.empty();
 
         when(employeeRepository.findById(sapId)).thenReturn(optionalEmployee);
@@ -142,7 +142,7 @@ public class EmployeeServiceTest {
 
     @Test
     void testSearchEmployee() {
-        String firstName = "John";
+        String firstName = "Jaya";
         List<Employee> expectedEmployees = Arrays.asList(employee1);
         when(employeeRepository.findBy(firstName)).thenReturn(expectedEmployees);
         List<Employee> result = employeeService.searchEmployee(firstName);
