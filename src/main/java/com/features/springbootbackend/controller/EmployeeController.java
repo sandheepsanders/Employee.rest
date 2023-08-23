@@ -1,7 +1,7 @@
 package com.features.springbootbackend.controller;
 
 import com.features.springbootbackend.model.Employee;
-import com.features.springbootbackend.service.EmployeeService;
+import com.features.springbootbackend.service.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,29 +18,29 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeServiceImpl employeeServiceImpl;
 
     @GetMapping
     public ResponseEntity<List<Employee>> getAllEmployees() {
-        List<Employee> employees = employeeService.getAllEmployees();
+        List<Employee> employees = employeeServiceImpl.getAllEmployees();
         return ResponseEntity.ok(employees);
     }
 
     @PostMapping
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
-        Employee addedEmployee = employeeService.addEmployee(employee);
+        Employee addedEmployee = employeeServiceImpl.addEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedEmployee);
     }
 
     @PutMapping("/{sapId}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable int sapId, @RequestBody Employee employee) {
-        Employee updatedEmployee = employeeService.updateEmployee(sapId, employee);
+        Employee updatedEmployee = employeeServiceImpl.updateEmployee(sapId, employee);
         return ResponseEntity.ok(updatedEmployee);
     }
 
     @DeleteMapping("/{sapId}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable int sapId) {
-        employeeService.deleteEmployee(sapId);
+        employeeServiceImpl.deleteEmployee(sapId);
         return ResponseEntity.noContent().build();
     }
 
@@ -50,7 +50,7 @@ public class EmployeeController {
             @RequestParam(defaultValue = "10") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Employee> employees = employeeService.getAllEmployee(pageable);
+        Page<Employee> employees = employeeServiceImpl.getAllEmployee(pageable);
         return ResponseEntity.ok(employees);
     }
 
@@ -64,13 +64,13 @@ public class EmployeeController {
             direction = Sort.Direction.DESC;
         }
         Sort sort = Sort.by(direction, sortBy);
-        List<Employee> employees = employeeService.sortEmployee(sort);
+        List<Employee> employees = employeeServiceImpl.sortEmployee(sort);
         return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<Employee>> searchEmployee(@RequestParam String firstName) {
-        List<Employee> employees = employeeService.searchEmployee(firstName);
+        List<Employee> employees = employeeServiceImpl.searchEmployee(firstName);
         if (employees.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

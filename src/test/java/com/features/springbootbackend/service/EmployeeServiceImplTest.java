@@ -1,6 +1,5 @@
 package com.features.springbootbackend.service;
 
-import com.features.springbootbackend.exception.ResourceNotFoundException;
 import com.features.springbootbackend.model.Employee;
 import com.features.springbootbackend.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,13 +22,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class EmployeeServiceTest {
+public class EmployeeServiceImplTest {
 
     @Mock
     private EmployeeRepository employeeRepository;
 
     @InjectMocks
-    private EmployeeService employeeService;
+    private EmployeeServiceImpl employeeServiceImpl;
 
    private Employee employee1;
     private Employee employee2;
@@ -55,7 +54,7 @@ public class EmployeeServiceTest {
         when(employeeRepository.findAll()).thenReturn(Arrays.asList(employee1, employee2));
 
 
-        List<Employee> result = employeeService.getAllEmployees();
+        List<Employee> result = employeeServiceImpl.getAllEmployees();
 
         assertEquals(2, result.size());
         assertEquals(employee1, result.get(0));
@@ -70,7 +69,7 @@ public class EmployeeServiceTest {
 
         when(employeeRepository.findAll(pageable)).thenReturn(page);
 
-        Page<Employee> result = employeeService.getAllEmployee(pageable);
+        Page<Employee> result = employeeServiceImpl.getAllEmployee(pageable);
         assertEquals(2, result.getTotalElements());
         assertEquals(employee1, result.getContent().get(0));
         assertEquals(employee2, result.getContent().get(1));
@@ -87,7 +86,7 @@ public class EmployeeServiceTest {
 
         when(employeeRepository.save(any(Employee.class))).thenReturn(employeeToAdd);
 
-        Employee result = employeeService.addEmployee(employeeToAdd);
+        Employee result = employeeServiceImpl.addEmployee(employeeToAdd);
 
         assertNotNull(result);
         assertEquals(employeeToAdd, result);
@@ -107,7 +106,7 @@ public class EmployeeServiceTest {
         when(employeeRepository.findById(sapId)).thenReturn(optionalEmployee);
         when(employeeRepository.save(any(Employee.class))).thenReturn(employeeToUpdate);
 
-        Employee result = employeeService.updateEmployee(sapId, employeeToUpdate);
+        Employee result = employeeServiceImpl.updateEmployee(sapId, employeeToUpdate);
 
         assertNotNull(result);
         assertEquals(employeeToUpdate, result);
@@ -120,7 +119,7 @@ public class EmployeeServiceTest {
     @Test
     void testDeleteEmployee() {
         int sapId = 1;
-        employeeService.deleteEmployee(sapId);
+        employeeServiceImpl.deleteEmployee(sapId);
         verify(employeeRepository, times(1)).deleteById(sapId);
     }
 
@@ -129,7 +128,7 @@ public class EmployeeServiceTest {
         String firstName = "Jaya";
         List<Employee> expectedEmployees = Arrays.asList(employee1);
         when(employeeRepository.findBy(firstName)).thenReturn(expectedEmployees);
-        List<Employee> result = employeeService.searchEmployee(firstName);
+        List<Employee> result = employeeServiceImpl.searchEmployee(firstName);
         assertEquals(1, result.size());
         assertEquals(expectedEmployees.get(0), result.get(0));
     }
@@ -138,7 +137,7 @@ public class EmployeeServiceTest {
     void testSortEmployee() {
         Sort sort = Sort.by(Sort.Direction.ASC, "firstName");
         when(employeeRepository.findAll(sort)).thenReturn(Arrays.asList(employee1, employee2));
-        List<Employee> result = employeeService.sortEmployee(sort);
+        List<Employee> result = employeeServiceImpl.sortEmployee(sort);
 
         assertEquals(2, result.size());
         assertEquals(employee1, result.get(0));

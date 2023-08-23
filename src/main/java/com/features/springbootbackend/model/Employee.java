@@ -1,7 +1,9 @@
 package com.features.springbootbackend.model;
 
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "employee")
@@ -52,6 +54,9 @@ public class Employee {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Project> projects = new ArrayList<>();
+
 
 
 }
