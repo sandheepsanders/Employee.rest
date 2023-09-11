@@ -33,7 +33,6 @@ public class ProjectServiceImpl implements ProjectService {
     public Project updateProject(int id, Project updatedProject) {
         Project project = getProjectById(id);
         project.setProjectName(updatedProject.getProjectName());
-        // Update other fields here
         return projectRepository.save(project);
     }
 
