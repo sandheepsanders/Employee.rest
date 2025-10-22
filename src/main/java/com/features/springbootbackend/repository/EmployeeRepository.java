@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.*;
 
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
-    @Query("SELECT e FROM Employee e WHERE LOWER(e.firstName) LIKE LOWER(:firstName)")
+    @Query("SELECT e FROM Employee e WHERE LOWER(e.firstName) LIKE LOWER(CONCAT('%', :firstName, '%'))")
     List<Employee> findBy(String firstName);
 }
